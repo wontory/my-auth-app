@@ -1,32 +1,33 @@
-import { Backend_URL } from '@client/lib/constants';
-import { NextAuthOptions } from 'next-auth';
-import NextAuth from 'next-auth/next';
-import Credentials from 'next-auth/providers/credentials';
+import { NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth/next";
+import Credentials from "next-auth/providers/credentials";
+
+import { Backend_URL } from "@client/lib/constants";
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     Credentials({
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
         username: {
-          label: 'Username',
-          type: 'text',
-          placeholder: 'devwontory@gmail.com',
+          label: "Username",
+          type: "text",
+          placeholder: "devwontory@gmail.com",
         },
-        password: { label: 'Password', type: 'password' },
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
         if (!credentials?.username || !credentials?.password) return null;
         const { username, password } = credentials;
-        const res = await fetch(Backend_URL + '/auth/login', {
-          method: 'POST',
+        const res = await fetch(Backend_URL + "/auth/login", {
+          method: "POST",
           body: JSON.stringify({
             username,
             password,
           }),
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         });
 

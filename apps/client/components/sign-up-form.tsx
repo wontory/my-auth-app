@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 import {
   Form,
@@ -11,20 +11,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from './ui/form';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Backend_URL } from '@client/lib/constants';
+} from "@client/components/ui/form";
+import { Button } from "@client/components/ui/button";
+import { Input } from "@client/components/ui/input";
+import { Backend_URL } from "@client/lib/constants";
 
 const formSchema = z.object({
   name: z.string().min(2, {
-    message: '이름은 최소 2글자 이상이어야 합니다.',
+    message: "이름은 최소 2글자 이상이어야 합니다.",
   }),
   email: z.string().email({
-    message: '이메일 형식이 올바르지 않습니다.',
+    message: "이메일 형식이 올바르지 않습니다.",
   }),
   password: z.string().min(8, {
-    message: '비밀번호는 최소 8글자 이상이어야 합니다.',
+    message: "비밀번호는 최소 8글자 이상이어야 합니다.",
   }),
 });
 
@@ -32,22 +32,22 @@ function SignUpForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
-      email: '',
-      password: '',
+      name: "",
+      email: "",
+      password: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const res = await fetch(Backend_URL + '/auth/register', {
-      method: 'POST',
+    const res = await fetch(Backend_URL + "/auth/register", {
+      method: "POST",
       body: JSON.stringify({
         name: values.name,
         email: values.email,
         password: values.password,
       }),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
@@ -57,7 +57,7 @@ function SignUpForm() {
     }
 
     const response = await res.json();
-    alert('회원가입이 완료되었습니다.');
+    alert("회원가입이 완료되었습니다.");
   }
 
   return (
